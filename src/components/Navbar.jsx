@@ -3,7 +3,7 @@ import React from 'react'
 const Navbar = () => {
   return (
     <div className="navbar">
-      <span className="logo">Chat App</span>
+      <span className="logo">Meet-App</span>
       {/***** Sample User *****/}
       <div className="user">
         <img src="https://unsplash.com/photos/X6Uj51n5CE8" alt="" />

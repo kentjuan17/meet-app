@@ -12,6 +12,7 @@ export const Register = () => {
         </div>
         <div className="form-container register-form">
           <div className="form-wrapper">
+            <h1 className="logo-responsive">Meet-up</h1>
             <span className="title">Sign Up</span>
             <form>
               <input type="text" placeholder="Enter your full name" />

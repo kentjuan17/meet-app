@@ -6,9 +6,9 @@ import "./sass/style.scss";
 function App() {
   return (
     //Remove comment to view
-    //<Register />
+    <Register />
     // <Login />
-    <Home />
+    //<Home />
   );
 }
 
