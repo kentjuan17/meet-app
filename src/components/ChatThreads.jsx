@@ -44,7 +44,7 @@ const ChatThreads = () => {
           <img src={chat[1].userInfo.photoURL} alt="" />
           <div className="user-info">
             <span>{chat[1].userInfo.userName}</span>
-            <p>{chat[1].userInfo.lastMessage?.text}</p>
+            <p>{chat[1].lastMessageInfo.lastMessage?.text}</p>
           </div>
         </div>
       ))}

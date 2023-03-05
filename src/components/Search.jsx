@@ -40,7 +40,10 @@ const Search = () => {
   // Adding a contact by clicking the searched user
   const handleStartChat = async () => {
     // creating an id for the conversation thread
-    const threadId = currentUser.uid + user.uid;
+    const threadId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
 
     try {
       const response = await getDoc(doc(db, "chats", threadId));
@@ -52,24 +55,28 @@ const Search = () => {
         // create conversation thread for both the current user and the searched user
         await setDoc(doc(db, "threads", currentUser.uid), {
           [threadId]: {
+            lastMessageInfo: {
+              lastMessage: {},
+              lastMessageDate: serverTimestamp(),
+            },
             userInfo: {
               uid: user.uid,
               userName: user.userName,
               photoURL: user.photoURL,
-              lastMessage: {},
-              lastMessageDate: serverTimestamp(),
             },
             dateCreated: serverTimestamp(),
           },
         });
         await setDoc(doc(db, "threads", user.uid), {
           [threadId]: {
+            lastMessageInfo: {
+              lastMessage: {},
+              lastMessageDate: serverTimestamp(),
+            },
             userInfo: {
               uid: currentUser.uid,
               userName: currentUser.displayName,
               photoURL: currentUser.photoURL,
-              lastMessage: {},
-              lastMessageDate: serverTimestamp(),
             },
             dateCreated: serverTimestamp(),
           },
