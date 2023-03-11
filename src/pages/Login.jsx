@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./../sass/style.scss";
-
 import { auth } from "./../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -15,12 +14,15 @@ export const Login = () => {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-
-      console.log(auth.currentUser);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCredential.user.emailVerified) {
+        setError("Please verify your email before signing in.");
+        return;
+      }
+      console.log(userCredential.user);
       navigate("/");
     } catch (err) {
-      setError(true);
+      setError("Invalid email or password. Please try again.");
       console.log(err);
     }
   };
@@ -51,7 +53,7 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={handleLogin}>Sign In</button>
-              {error && <span>Something went wrong.</span>}
+              {error && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5, display: "flex", alignItems: "center", justifyContent: "center"}}>{error}</span>}
             </form>
             <p>
               Don't have an account yet? Register{" "}

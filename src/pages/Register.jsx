@@ -22,6 +22,8 @@ export const Register = () => {
     const password = e.target[2].value;
     const userPicture = e.target[3].files[0];
 
+    //Start of form validation
+
     setNameError(userName === "");
     setEmailError(email === "");
 
@@ -37,6 +39,8 @@ export const Register = () => {
     if (userName === "" || email === "") {
       return;
     }
+
+    //End of form validation
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
