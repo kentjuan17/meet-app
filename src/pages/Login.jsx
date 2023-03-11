@@ -15,7 +15,7 @@ export const Login = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      if (!userCredential.user.emailVerified) {
+      if (!userCredential.user) {
         setError("Please verify your email before signing in.");
         return;
       }
