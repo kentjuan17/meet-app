@@ -9,6 +9,9 @@ import { useNavigate, Link } from "react-router-dom";
 
 export const Register = () => {
   const [error, setError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -19,9 +22,19 @@ export const Register = () => {
     const password = e.target[2].value;
     const userPicture = e.target[3].files[0];
 
-    if (password.length < 6) {
-      console.log("Passwords should have a minimum of 6 digits");
+    setNameError(userName === "");
+    setEmailError(email === "");
 
+    let passwordErrorMsg  = "";
+    if (!password) {
+      passwordErrorMsg = "Please enter a password";
+    } else if (password.length < 6) {
+      passwordErrorMsg = "Passwords should have a minimum of 6 characters";
+    }
+
+    setPasswordError(passwordErrorMsg);
+
+    if (userName === "" || email === "") {
       return;
     }
 
@@ -79,13 +92,24 @@ export const Register = () => {
             <h1 className="logo-responsive">Meet-up</h1>
             <span className="title">Sign Up</span>
             <form onSubmit={handleRegister}>
-              <input required type="text" placeholder="Enter your full name" />
-              <input required type="email" placeholder="Enter your email" />
               <input
-                required
+                type="text" placeholder="Enter your full name"
+                onChange={(e) => {
+                  setNameError(false);
+                }} 
+              /> {nameError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>Name is required</span>}
+              <input 
+                type="email" 
+                placeholder="Enter your email"
+                onChange={(e) => {
+                  setEmailError(false);
+                }}
+              /> {emailError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>Email is required</span>}
+              <input
                 type="password"
                 placeholder="Enter your password"
-              />
+                onChange={(e) => setPasswordError("")}
+              />{passwordError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>{passwordError}</span>}
               <input style={{ display: "none" }} type="file" id="avatar" />
               <label htmlFor="avatar">
                 <img src={Add} alt="" />

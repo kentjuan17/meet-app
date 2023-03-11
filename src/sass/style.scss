@@ -1,26 +1,20 @@
 @import "./variables.scss";
 
 //----- Responsive-----//
-@mixin breakpoint($min-width) {
-  @media screen and ($min-width) {
-    @content;
-  }
-}
-
 @mixin mobile {
-  @include breakpoint(480px) {
+  @media screen and (max-width: 480px) {
     @content;
   }
 }
 
 @mixin tablet {
-  @include breakpoint(768px) {
+  @media screen and (max-width: 768px) {
     @content;
   }
 }
 
 @mixin laptop {
-  @include breakpoint(1200px) {
+  @media screen and (max-width: 768px) {
     @content;
   }
 }
