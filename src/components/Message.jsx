@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import { ChatContext } from "../context/ChatContext";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const { data } = useContext(ChatContext);
-  const [time, setTime] = useState("");
   const ref = useRef();
 
   useEffect(() => {
@@ -15,16 +14,49 @@ const Message = ({ message }) => {
   // Get the current timestamp
   const currentTimestamp = new Date().getTime();
 
-  // Assume `timestamp` is a Firebase Firestore Timestamp
-  // const timestamp = message.date.Timestamp.fromDate(new Date());
+  // Firebase Firestore Timestamp in milliseconds
+  const timestamp = message.date.toMillis();
 
-  setInterval(function () {
-    // Get the time difference in milliseconds
-    const timeDifference = currentTimestamp - message.date.toDate().getTime();
-    const minutes = Math.floor((timeDifference / 1000 / 60) % 60);
-    // console.log(minutes);
-    setTime(minutes);
-  }, 60000);
+  // convert timestamp to date object
+  const date = new Date(timestamp);
+
+  const timeDifference = currentTimestamp - timestamp;
+
+  const minutes = Math.floor(timeDifference / 1000 / 60);
+  // console.log(hours);
+  console.log(minutes);
+
+  let time = 0;
+
+  if (minutes >= 1440) {
+    // date and time should be posted
+    time = date.toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  }
+  if (minutes >= 180) {
+    // after 3 hours, time should be posted. less than a day.
+    time = date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  }
+  if (minutes >= 60) {
+    // hours
+    const hours = Math.floor(minutes / 60);
+    time = hours === 1 ? "an hour ago" : `${hours} hours ago`;
+    console.log("test", hours);
+  }
+  if (minutes < 60) {
+    // minutes
+    time = minutes < 5 ? "a while ago" : `${minutes} minutes ago`;
+  }
 
   return (
     <div
@@ -42,7 +74,7 @@ const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>{`${time > 5 ? `${time} minutes ago` : "a while ago"}`}</span>
+        <span className="message-sent">{time}</span>
       </div>
       <div className="message-content">
         <p>{message.text}</p>
