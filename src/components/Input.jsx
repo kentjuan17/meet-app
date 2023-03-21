@@ -47,8 +47,8 @@ const Input = () => {
       );
     } else {
       // TODO: delete when done testing
-      console.log(currentUser);
-      console.log(data);
+      // console.log(currentUser);
+      // console.log(data);
 
       // adds an input text to the messages array in firebase
       await updateDoc(doc(db, "chats", data.chatId), {

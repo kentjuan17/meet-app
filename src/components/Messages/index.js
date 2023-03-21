@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import Message from "./Message";
-import { ChatContext } from "../context/ChatContext";
+import Message from "../Message";
+import { ChatContext } from "../../context/ChatContext";
 import { onSnapshot, doc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
+import "./styles.scss";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
+  const [dateOfMessage, setDateOfMessage] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
@@ -17,9 +19,6 @@ const Messages = () => {
   }, [data.chatId]);
 
   //TODO: delete when done testing
-  console.log(messages);
-
-  // messages.forEach((m) => console.log(m.date.toDate()));
 
   return (
     <div className="messages">

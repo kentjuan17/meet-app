@@ -11,7 +11,7 @@ export const CurrentUserContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       // TODO: delete this when done testing
-      console.log(user);
+      // console.log(user);
     });
 
     return () => {

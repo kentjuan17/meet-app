@@ -285,69 +285,6 @@ hr {
         }
       }
 
-      .messages {
-        padding: 10px;
-        background-color: #e0aaff;
-        height: calc(100% - 110px);
-        overflow-y: scroll;
-
-        .message {
-          display: flex;
-          gap: 20px;
-          margin-bottom: 20px;
-
-          .message-info {
-            display: flex;
-            flex-direction: column;
-            color: gray;
-            font-weight: 300;
-
-            img {
-              width: 40px;
-              height: 40px;
-              border-radius: 50%;
-              object-fit: cover;
-            }
-          }
-
-          .message-content {
-            max-width: 80%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-
-            p {
-              background-color: #fffffc;
-              padding: 10px 20px;
-              border-radius: 0px 10px 10px 10px;
-              max-width: max-content;
-            }
-
-            img {
-              width: 50%;
-            }
-          }
-
-          &.current-user {
-            flex-direction: row-reverse;
-
-            .message-content {
-              align-items: flex-end;
-
-              p {
-                background-color: #9d4edd;
-                color: #fffffc;
-                border-radius: 10px 0px 10px 10px;
-              }
-            }
-          }
-        }
-      }
-
-      .messages::-webkit-scrollbar {
-        display: none;
-      }
-
       .input {
         height: 60px;
         background-color: #fffffc;

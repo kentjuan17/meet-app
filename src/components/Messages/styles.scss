@@ -1,0 +1,12 @@
+@import "./../../sass/variables.scss";
+
+.messages {
+  padding: 10px;
+  background-color: #e0aaff;
+  height: calc(100% - 110px);
+  overflow-y: scroll;
+}
+
+.messages::-webkit-scrollbar {
+  display: none;
+}

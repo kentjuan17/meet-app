@@ -26,7 +26,7 @@ const ChatThreads = () => {
   }, [currentUser.uid]);
 
   // TODO: delete this when done testing
-  console.log(Object?.entries(chats));
+  // console.log(Object?.entries(chats));
 
   const handleSelect = (user) => {
     dispatch({ type: "CHANGE_USER", payload: user });

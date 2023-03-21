@@ -1,0 +1,67 @@
+@import "./../../sass/variables.scss";
+
+.message {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  .message-date {
+  }
+
+  .message-bar {
+    // display: flex;
+    // flex-direction: column;
+
+    .message-info {
+      // display: flex;
+      // flex-direction: column;
+      color: gray;
+      font-weight: 300;
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .message-content {
+      max-width: 80%;
+      display: flex;
+      flex-direction: column;
+      background-color: $background-secondary-color;
+      padding: 10px 10px 5px;
+      border-radius: 0px 10px 10px 10px;
+      max-width: max-content;
+      font-size: 0.8rem;
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      .message-time-posted {
+        font-size: 0.6rem;
+        text-align: right;
+        margin-right: -5px;
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+  }
+
+  &.current-user {
+    flex-direction: row-reverse;
+
+    .message-content {
+      align-items: flex-end;
+      background-color: $background-primary-color;
+      color: $background-secondary-color;
+      border-radius: 10px 0px 10px 10px;
+    }
+  }
+}
