@@ -1,22 +1,20 @@
 @import "./../../sass/variables.scss";
 
 .message {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
 
   .message-date {
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 10px auto;
   }
 
   .message-bar {
-    // display: flex;
-    // flex-direction: column;
+    display: flex;
+    flex-direction: row;
 
     .message-info {
-      // display: flex;
-      // flex-direction: column;
       color: gray;
       font-weight: 300;
 
@@ -37,9 +35,10 @@
       border-radius: 0px 10px 10px 10px;
       max-width: max-content;
       font-size: 0.8rem;
+      margin: 0 10px;
 
       p {
-        margin: 0 0 10px;
+        margin: 0 0 3px;
       }
 
       .message-time-posted {
@@ -52,16 +51,16 @@
         width: 50%;
       }
     }
-  }
 
-  &.current-user {
-    flex-direction: row-reverse;
+    &.current-user {
+      flex-direction: row-reverse;
 
-    .message-content {
-      align-items: flex-end;
-      background-color: $background-primary-color;
-      color: $background-secondary-color;
-      border-radius: 10px 0px 10px 10px;
+      .message-content {
+        align-items: flex-end;
+        background-color: $background-primary-color;
+        color: $background-secondary-color;
+        border-radius: 10px 0px 10px 10px;
+      }
     }
   }
 }
