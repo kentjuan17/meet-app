@@ -49,6 +49,71 @@
     gap: 10px;
     align-items: center;
 
+    .form-mobile {
+
+      input {
+        width: 50%;
+      }
+
+      .mobile-input {
+        width: 40%;
+        background-color: #72369d;
+        border: none;
+        color: #fffffc;
+        &:hover {
+          background-color: #9d4edd;
+          color: #fffffc;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .btn-mobile {
+      width: 100%;
+      
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      background-color: #fffffc;
+      border: 1px solid #272727;
+      color: #272727;
+      &:hover {
+        background-color: #9d4edd;
+        color: #fffffc;
+      }
+
+      svg {
+        text-decoration: none;
+      }
+
+    }
+
+    h4 {
+      overflow: hidden;
+      text-align: center;
+    }
+    
+    h4:before,
+    h4:after {
+      background-color: #272727;
+      content: "";
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 50%;
+    }
+    
+    h4:before {
+      right: 0.5em;
+      margin-left: -50%;
+    }
+    
+    h4:after {
+      left: 0.5em;
+      margin-right: -50%;
+    }
+
     .logo-responsive {
       visibility: hidden;
       @include tablet {

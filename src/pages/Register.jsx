@@ -6,6 +6,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
 import "./../sass/style.scss";
 import { useNavigate, Link } from "react-router-dom";
+import { BsFillTelephoneFill } from "react-icons/bs";
 
 export const Register = () => {
   const [error, setError] = useState(false);
@@ -121,6 +122,8 @@ export const Register = () => {
               </label>
               <button>Sign Up</button>
               {error && <span>Something went wrong</span>}
+              <h4>or</h4>
+            <Link to="/mobile" style={{ textDecoration: 'none' }}><button className="btn-mobile"><BsFillTelephoneFill />Sign up with Phone</button></Link>
             </form>
             <p>
               Already have an account? Login <Link to="/login">here</Link>.
