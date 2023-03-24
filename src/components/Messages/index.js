@@ -3,12 +3,12 @@ import Message from "../Message";
 import { ChatContext } from "../../context/ChatContext";
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { groupMessagesByDate } from "./functions";
 import "./styles.scss";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
-  const [dateOfMessage, setDateOfMessage] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
@@ -18,12 +18,17 @@ const Messages = () => {
     return () => unsubscribe();
   }, [data.chatId]);
 
-  //TODO: delete when done testing
+  const newMessages = groupMessagesByDate(messages);
 
   return (
     <div className="messages">
-      {messages.map((m) => (
-        <Message message={m} key={m.id} />
+      {Object.entries(newMessages).map(([date, messages]) => (
+        <div key={date} className="grouped-messages">
+          <span className="messages-date">{date}</span>
+          {messages.map((m) => (
+            <Message message={m} key={m.id} />
+          ))}
+        </div>
       ))}
     </div>
   );

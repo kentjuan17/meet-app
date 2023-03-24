@@ -91,6 +91,9 @@ const Input = () => {
     setImg(null);
   };
 
+  // proceed to search the user when "enter" key was pressed
+  const handleEnterKey = (e) => e.code === "Enter" && handleSendMessage();
+
   return (
     <div className="input">
       <input
@@ -98,6 +101,7 @@ const Input = () => {
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown={handleEnterKey}
       />
       <div className="send">
         <img src={Attach} alt="" />

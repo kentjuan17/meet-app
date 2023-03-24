@@ -5,6 +5,15 @@
   background-color: #e0aaff;
   height: calc(100% - 110px);
   overflow-y: scroll;
+
+  .messages-date {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 10px auto;
+    text-transform: capitalize;
+  }
 }
 
 .messages::-webkit-scrollbar {
