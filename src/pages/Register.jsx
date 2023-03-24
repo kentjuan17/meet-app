@@ -28,7 +28,7 @@ export const Register = () => {
     setNameError(userName === "");
     setEmailError(email === "");
 
-    let passwordErrorMsg  = "";
+    let passwordErrorMsg = "";
     if (!password) {
       passwordErrorMsg = "Please enter a password";
     } else if (password.length < 6) {
@@ -101,20 +101,20 @@ export const Register = () => {
                 type="text" placeholder="Enter your full name"
                 onChange={(e) => {
                   setNameError(false);
-                }} 
-              /> {nameError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>Name is required</span>}
-              <input 
-                type="email" 
+                }}
+              /> {nameError && <span style={{ color: "#E74C3C", fontSize: 12, marginTop: -5 }}>Name is required</span>}
+              <input
+                type="email"
                 placeholder="Enter your email"
                 onChange={(e) => {
                   setEmailError(false);
                 }}
-              /> {emailError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>Email is required</span>}
+              /> {emailError && <span style={{ color: "#E74C3C", fontSize: 12, marginTop: -5 }}>Email is required</span>}
               <input
                 type="password"
                 placeholder="Enter your password"
                 onChange={(e) => setPasswordError("")}
-              />{passwordError && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5}}>{passwordError}</span>}
+              />{passwordError && <span style={{ color: "#E74C3C", fontSize: 12, marginTop: -5 }}>{passwordError}</span>}
               <input style={{ display: "none" }} type="file" id="avatar" />
               <label htmlFor="avatar">
                 <img src={Add} alt="" />
@@ -122,8 +122,8 @@ export const Register = () => {
               </label>
               <button>Sign Up</button>
               {error && <span>Something went wrong</span>}
-              <h4>or</h4>
-            <Link to="/mobile" style={{ textDecoration: 'none' }}><button className="btn-mobile"><BsFillTelephoneFill />Sign up with Phone</button></Link>
+              <h4 style={{marginTop: 1}}>or</h4>
+              <Link to="/mobile" style={{ textDecoration: 'none' }}><button className="btn-mobile"><BsFillTelephoneFill />Sign up with Phone</button></Link>
             </form>
             <p>
               Already have an account? Login <Link to="/login">here</Link>.

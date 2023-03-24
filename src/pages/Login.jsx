@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./../sass/style.scss";
 import { auth } from "./../firebase";
-import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { BsFillTelephoneFill } from "react-icons/bs";
 
 export const Login = () => {
   const [error, setError] = useState(false);
-  const [identifier, setIdentifier] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,31 +14,17 @@ export const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (identifier.includes("@")) {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, identifier, password);
-        if (!userCredential.user) {
-          setError("Please verify your email before signing in.");
-          return;
-        }
-        console.log(userCredential.user);
-        navigate("/");
-      } catch (err) {
-        setError("Invalid email or password. Please try again.");
-        console.log(err);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCredential.user) {
+        setError("Please verify your email before signing in.");
+        return;
       }
-    } else {
-      try {
-        const recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", {}, auth);
-        const confirmationResult = await signInWithPhoneNumber(auth, identifier, recaptchaVerifier);
-        const verificationCode = prompt("Enter the verification code sent to your phone number:");
-        const userCredential = await confirmationResult.confirm(verificationCode);
-        console.log(userCredential.user);
-        navigate("/");
-      } catch (err) {
-        setError("Invalid phone number or verification code. Please try again.");
-        console.log(err);
-      }
+      console.log(userCredential.user);
+      navigate("/");
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+      console.log(err);
     }
   };
 
@@ -56,10 +42,10 @@ export const Login = () => {
             <span className="title">Sign In</span>
             <form>
               <input
-                type="text"
-                placeholder="Enter your email or phone number"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 type="password"
@@ -68,8 +54,9 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={handleLogin}>Sign In</button>
-              <div id="recaptcha-container"></div>
               {error && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5, display: "flex", alignItems: "center", justifyContent: "center"}}>{error}</span>}
+              <h4 style={{marginTop: 5}}>or</h4>
+              <Link to="/mobileLogin" style={{ textDecoration: 'none' }}><button className="btn-mobile"><BsFillTelephoneFill />Sign in with Phone</button></Link>
             </form>
             <p>
               Don't have an account yet? Register{" "}

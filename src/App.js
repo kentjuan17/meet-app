@@ -2,6 +2,7 @@ import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { PhoneReg } from "./pages/PhoneReg";
+import { LoginPhone } from "./pages/LoginPhone";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "./context/CurrentUserContext";
@@ -32,6 +33,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="mobile" element={<PhoneReg />} />
+          <Route path="mobileLogin" element={<LoginPhone />} />
         </Route>
       </Routes>
     </BrowserRouter>
