@@ -1,0 +1,19 @@
+@import "./../../sass/variables.scss";
+
+.search {
+  border-bottom: 1px solid #6c757d;
+
+  .search-container {
+    padding: 10px;
+
+    input {
+      background-color: transparent;
+      border: none;
+      color: #fffffc;
+      outline: none;
+      &::placeholder {
+        color: #c77dff;
+      }
+    }
+  }
+}

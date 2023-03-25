@@ -2,3 +2,55 @@
 
 $background-primary-color: #9d4edd;
 $background-secondary-color: #fffffc;
+$background-darker-color: #461e5c;
+$background-dark-color: #72369d;
+$background-image: linear-gradient(
+    45deg,
+    rgba(72, 149, 239, 0.75),
+    rgba(157, 78, 221, 0.75),
+    rgba(157, 78, 221, 0.75)
+  ),
+  url(../img/formimg.jpg);
+
+$text-primary-color: #272727;
+$text-secondary-color: #fffffc;
+$icon-dark-color: #6c757d;
+$icon-light-color: #d1d1d1;
+$border-dark-color: #272727;
+$shadow-dark-color: rgba(70, 30, 92, 0.4);
+$border-light-color: #495057;
+$transition-speed: 500ms;
+
+//----- Responsive-----//
+@mixin mobile {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+// Functions
+@mixin dropdown-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: $transition-speed ease;
+}
+
+@mixin dropdown-inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20x);
+  transform: $transition-speed ease;
+}

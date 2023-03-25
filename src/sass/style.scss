@@ -1,24 +1,5 @@
 @import "./variables.scss";
 
-//----- Responsive-----//
-@mixin mobile {
-  @media screen and (max-width: 480px) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media screen and (max-width: 768px) {
-    @content;
-  }
-}
-
-@mixin laptop {
-  @media screen and (max-width: 768px) {
-    @content;
-  }
-}
-
 //----- Login And Register -----//
 * {
   box-sizing: border-box;
@@ -104,7 +85,6 @@
       svg {
         text-decoration: none;
       }
-
     }
 
     h4 {
@@ -114,7 +94,7 @@
       font-weight: 500;
       font-size: 13px;
     }
-    
+
     h4:before,
     h4:after {
       background-color: #272727;
@@ -125,12 +105,12 @@
       vertical-align: middle;
       width: 50%;
     }
-    
+
     h4:before {
       right: 0.5em;
       margin-left: -50%;
     }
-    
+
     h4:after {
       left: 0.5em;
       margin-right: -50%;
@@ -160,7 +140,7 @@
         padding: 15px 0;
         width: 300px;
         border: none;
-        border-bottom: 1px solid #495057;
+        border-bottom: 1px solid $border-light-color;
         outline: none;
         &::placeholder {
           color: #6c757d;
@@ -201,13 +181,7 @@
 }
 
 .img-bg {
-  background-image: linear-gradient(
-      45deg,
-      rgba(72, 149, 239, 0.75),
-      rgba(157, 78, 221, 0.75),
-      rgba(157, 78, 221, 0.75)
-    ),
-    url(../img/formimg.jpg);
+  background-image: $background-image;
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -246,172 +220,5 @@ hr {
     width: 100%;
     height: 100%;
     display: flex;
-
-    .sidebar {
-      flex: 1;
-      background-color: #72369d;
-      overflow: hidden;
-      position: relative;
-
-      .navbar {
-        display: flex;
-        align-items: center;
-        background-color: #461e5c;
-        height: 50px;
-        padding: 10px;
-        justify-content: space-between;
-        color: #fffffc;
-
-        .logo {
-          font-weight: 500;
-          @include tablet {
-            display: none;
-          }
-        }
-
-        .user {
-          display: flex;
-          gap: 10px;
-
-          img {
-            background-color: #fffffc;
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-
-          button {
-            background-color: #9d4edd;
-            color: #fffffc;
-            font-size: 10px;
-            border: none;
-            cursor: pointer;
-            @include tablet {
-              position: absolute;
-              right: 10px;
-              padding: 5px;
-            }
-            @include mobile {
-              position: absolute;
-              bottom: 10px;
-              padding: 5px;
-              width: 100%;
-              right: 0;
-            }
-          }
-        }
-      }
-      .search {
-        border-bottom: 1px solid #6c757d;
-
-        .search-container {
-          padding: 10px;
-
-          input {
-            background-color: transparent;
-            border: none;
-            color: #fffffc;
-            outline: none;
-            &::placeholder {
-              color: #c77dff;
-            }
-          }
-        }
-      }
-
-      .user-chat {
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #fffffc;
-        cursor: pointer;
-        &:hover {
-          background-color: #461e5c;
-        }
-
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        .user-info {
-          span {
-            font-size: 18px;
-            font-weight: 500;
-          }
-          p {
-            font-size: 14px;
-            color: #c77dff;
-          }
-        }
-      }
-    }
-
-    .chat {
-      flex: 2;
-
-      .chat-info {
-        height: 50px;
-        background-color: #9d4edd;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        color: #fffffc;
-      }
-
-      .chat-icons {
-        display: flex;
-
-        img {
-          height: 24px;
-          cursor: pointer;
-        }
-      }
-
-      .input {
-        height: 60px;
-        background-color: #fffffc;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        input {
-          width: 100%;
-          border: none;
-          outline: none;
-          color: #272727;
-          font-size: 16px;
-
-          &::placeholder {
-            color: #e6bbff;
-          }
-        }
-
-        .send {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          img {
-            height: 24px;
-            cursor: pointer;
-          }
-
-          button {
-            border: none;
-            padding: 10px 15px;
-            color: #fffffc;
-            background-color: #9d4edd;
-            cursor: pointer;
-          }
-        }
-      }
-    }
   }
 }
