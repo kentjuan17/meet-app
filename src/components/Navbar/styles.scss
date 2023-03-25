@@ -18,7 +18,11 @@
   }
 
   .user {
+<<<<<<< HEAD
     display: inline-block;
+=======
+    display: flex;
+>>>>>>> 933f42b195bb78c3a939fe46966aed3a7e19bcdc
     position: relative;
 
     img {
@@ -29,6 +33,7 @@
       object-fit: cover;
     }
 
+<<<<<<< HEAD
     .user-status {
       border-radius: 50%;
       height: 10px;
@@ -45,6 +50,35 @@
     .offline {
       background-color: $danger-color;
     }
+=======
+    .online-indicator {
+      font-size: 35px;
+      position: absolute;
+      top:-18px;
+      right: 12px;
+      color: #80ed99;
+    }
+
+    // button {
+    //   background-color: #9d4edd;
+    //   color: #fffffc;
+    //   font-size: 10px;
+    //   border: none;
+    //   cursor: pointer;
+    //   @include tablet {
+    //     position: absolute;
+    //     right: 10px;
+    //     padding: 5px;
+    //   }
+    //   @include mobile {
+    //     position: absolute;
+    //     bottom: 10px;
+    //     padding: 5px;
+    //     width: 100%;
+    //     right: 0;
+    //   }
+    // }
+>>>>>>> 933f42b195bb78c3a939fe46966aed3a7e19bcdc
   }
 
   .actions {
@@ -63,6 +97,7 @@
       font-size: 1.2rem;
       padding: 5px 10px;
       color: $icon-light-color;
+      cursor: pointer;
 
       svg {
         justify-content: center;

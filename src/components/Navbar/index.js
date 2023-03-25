@@ -5,7 +5,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ChatContext } from "../../context/ChatContext";
 import "./styles.scss";
-import { BsFillChatLeftTextFill, BsBoxArrowRight } from "react-icons/bs";
+import { BsFillChatLeftTextFill, BsBoxArrowRight, BsDot } from "react-icons/bs";
 
 const Navbar = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -30,7 +30,8 @@ const Navbar = () => {
       <div className="user">
         <div className="user-status"></div>
         <img src={currentUser.photoURL} alt="" />
-      </div>
+        {currentUser && <span className="online-indicator"><BsDot /></span>}
+      </div>  
       <div className="actions">
         <button className="icon-chat">
           <BsFillChatLeftTextFill />
