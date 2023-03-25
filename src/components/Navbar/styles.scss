@@ -19,6 +19,7 @@
 
   .user {
     display: flex;
+    position: relative;
 
     img {
       background-color: #fffffc;
@@ -27,6 +28,14 @@
       border-radius: 50%;
       object-fit: cover;
       margin-right: 30px;
+    }
+
+    .online-indicator {
+      font-size: 35px;
+      position: absolute;
+      top:-18px;
+      right: 12px;
+      color: #80ed99;
     }
 
     // button {
