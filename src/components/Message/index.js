@@ -36,8 +36,8 @@ const Message = ({ message }) => {
         </div>
         <div className="message-content">
           <p>{message.text}</p>
-          <span className="message-time-posted">{sentAt}</span>
           {message.img && <img src={message.img} alt="" />}
+          <span className="message-time-posted">{sentAt}</span>
         </div>
       </div>
     </div>
