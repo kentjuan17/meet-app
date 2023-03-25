@@ -18,14 +18,11 @@ const Messages = () => {
     return () => unsubscribe();
   }, [data.chatId]);
 
-  console.log(data);
-
-  let newMessages = [];
-  newMessages = groupMessagesByDate(messages);
+  const sortedMessages = groupMessagesByDate(messages);
 
   return (
     <div className="messages">
-      {Object.entries(newMessages).map(([date, messages]) => (
+      {Object.entries(sortedMessages).map(([date, messages]) => (
         <div key={date} className="grouped-messages">
           <span className="messages-date">{date}</span>
           {messages.map((m) => (

@@ -5,7 +5,7 @@
 
   .chat-info {
     height: 50px;
-    background-color: $background-primary-color;
+    background-color: #9d4edd;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,10 +15,16 @@
 
   .chat-icons {
     display: flex;
+    gap: 25px;
 
-    img {
-      height: 24px;
+    .icons {
+      font-size: 24px;
+      color: $icon-light-color;
       cursor: pointer;
+
+      &:hover {
+        color: $text-secondary-color;
+      }
     }
   }
 
@@ -59,6 +65,51 @@
         background-color: #9d4edd;
         cursor: pointer;
       }
+    }
+  }
+}
+
+.icons {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.input {
+  height: 60px;
+  background-color: #fffffc;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #272727;
+    font-size: 16px;
+
+    &::placeholder {
+      color: #e6bbff;
+    }
+  }
+
+  .send {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      height: 24px;
+      cursor: pointer;
+    }
+
+    button {
+      border: none;
+      padding: 10px 15px;
+      color: #fffffc;
+      background-color: #9d4edd;
+      cursor: pointer;
     }
   }
 }

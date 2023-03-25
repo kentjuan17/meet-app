@@ -19,6 +19,8 @@ export const CurrentUserContextProvider = ({ children }) => {
     };
   }, []);
 
+  console.log(currentUser);
+
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>
       {children}
