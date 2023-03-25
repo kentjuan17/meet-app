@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../sass/style.scss";
 import { auth } from "./../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { db } from "./../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 import { BsFillTelephoneFill } from "react-icons/bs";
 
 export const Login = () => {
@@ -15,12 +17,22 @@ export const Login = () => {
     e.preventDefault();
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       if (!userCredential.user) {
         setError("Please verify your email before signing in.");
         return;
       }
-      console.log(userCredential.user);
+      // console.log(userCredential.user);
+
+      // set active status when user logs in
+      const userRef = doc(db, "users", userCredential.user.uid);
+      await updateDoc(userRef, { isActive: true });
+
+      // navigate to home page
       navigate("/");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
@@ -54,9 +66,27 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={handleLogin}>Sign In</button>
-              {error && <span style={{color: "#E74C3C", fontSize: 12, marginTop: -5, display: "flex", alignItems: "center", justifyContent: "center"}}>{error}</span>}
-              <h4 style={{marginTop: 5}}>or</h4>
-              <Link to="/mobileLogin" style={{ textDecoration: 'none' }}><button className="btn-mobile"><BsFillTelephoneFill />Sign in with Phone</button></Link>
+              {error && (
+                <span
+                  style={{
+                    color: "#E74C3C",
+                    fontSize: 12,
+                    marginTop: -5,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {error}
+                </span>
+              )}
+              <h4 style={{ marginTop: 5 }}>or</h4>
+              <Link to="/mobileLogin" style={{ textDecoration: "none" }}>
+                <button className="btn-mobile">
+                  <BsFillTelephoneFill />
+                  Sign in with Phone
+                </button>
+              </Link>
             </form>
             <p>
               Don't have an account yet? Register{" "}
