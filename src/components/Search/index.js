@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { db } from "./../firebase";
-import { CurrentUserContext } from "../context/CurrentUserContext";
+import { db } from "../../firebase";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import {
   collection,
   query,
@@ -11,6 +11,7 @@ import {
   getDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import "./styles.scss";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -97,7 +98,7 @@ const Search = () => {
       <div className="search-container">
         <input
           type="text"
-          placeholder="Find users"
+          placeholder="Search user"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
           onKeyDown={handleEnterKey}

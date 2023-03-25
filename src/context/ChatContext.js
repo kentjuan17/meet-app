@@ -5,6 +5,7 @@ export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
   const { currentUser } = useContext(CurrentUserContext);
+
   const INITIAL_STATE = {
     chatId: "null",
     user: {},
@@ -19,6 +20,11 @@ export const ChatContextProvider = ({ children }) => {
             currentUser.uid > action.payload.uid
               ? currentUser.uid + action.payload.uid
               : action.payload.uid + currentUser.uid,
+        };
+      case "LOG_OUT":
+        return {
+          chatId: "null",
+          user: {},
         };
 
       default:

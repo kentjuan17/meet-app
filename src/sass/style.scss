@@ -366,10 +366,9 @@ hr {
 
       .chat-icons {
         display: flex;
-        gap: 25px;
 
-        .icons {
-          font-size: 24px;
+        img {
+          height: 24px;
           cursor: pointer;
         }
       }

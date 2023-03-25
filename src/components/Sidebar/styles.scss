@@ -1,0 +1,8 @@
+@import "./../../sass/variables.scss";
+
+.sidebar {
+  flex: 1;
+  background-color: $background-darker-color;
+  overflow: hidden;
+  position: relative;
+}

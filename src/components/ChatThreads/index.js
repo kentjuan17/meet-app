@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
-import { db } from "../firebase";
-import { CurrentUserContext } from "../context/CurrentUserContext";
-import { ChatContext } from "../context/ChatContext";
+import { db } from "../../firebase";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { ChatContext } from "../../context/ChatContext";
+import "./styles.scss";
 
 const ChatThreads = () => {
   const [chats, setChats] = useState([]);

@@ -1,0 +1,64 @@
+@import "./../../sass/variables.scss";
+
+.chat {
+  flex: 2;
+
+  .chat-info {
+    height: 50px;
+    background-color: $background-primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: #fffffc;
+  }
+
+  .chat-icons {
+    display: flex;
+
+    img {
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+
+  .input {
+    height: 60px;
+    background-color: #fffffc;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      color: #272727;
+      font-size: 16px;
+
+      &::placeholder {
+        color: #e6bbff;
+      }
+    }
+
+    .send {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        height: 24px;
+        cursor: pointer;
+      }
+
+      button {
+        border: none;
+        padding: 10px 15px;
+        color: #fffffc;
+        background-color: #9d4edd;
+        cursor: pointer;
+      }
+    }
+  }
+}

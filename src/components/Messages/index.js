@@ -18,7 +18,10 @@ const Messages = () => {
     return () => unsubscribe();
   }, [data.chatId]);
 
-  const newMessages = groupMessagesByDate(messages);
+  console.log(data);
+
+  let newMessages = [];
+  newMessages = groupMessagesByDate(messages);
 
   return (
     <div className="messages">

@@ -1,0 +1,37 @@
+@import "./../../sass/variables.scss";
+
+.chats {
+  .user-chat {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fffffc;
+    cursor: pointer;
+    &:hover {
+      background-color: $background-dark-color;
+    }
+
+    &:focus {
+      background-color: $background-dark-color;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info {
+      span {
+        font-size: 18px;
+        font-weight: 500;
+      }
+      p {
+        font-size: 14px;
+        color: #c77dff;
+      }
+    }
+  }
+}
