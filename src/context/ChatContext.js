@@ -22,13 +22,9 @@ export const ChatContextProvider = ({ children }) => {
               : action.payload.uid + currentUser.uid,
         };
       case "LOG_OUT":
-        return {
-          chatId: "null",
-          user: {},
-        };
-
+        return INITIAL_STATE;
       default:
-        return state;
+        return INITIAL_STATE;
     }
   };
 
