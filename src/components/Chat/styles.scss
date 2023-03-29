@@ -9,13 +9,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
     color: #fffffc;
+
+    .chat-name-status {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 10px;
+
+      .display-name {
+        font-size: 1.3rem;
+      }
+
+      .status {
+        font-size: 0.6rem;
+        margin-left: 10px;
+      }
+    }
   }
 
   .chat-icons {
     display: flex;
     gap: 25px;
+    margin-right: 10px;
 
     .icons {
       font-size: 24px;

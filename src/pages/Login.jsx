@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../sass/style.scss";
 import { auth } from "./../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { db } from "./../firebase";
-import { doc, updateDoc } from "firebase/firestore";
 import { BsFillTelephoneFill } from "react-icons/bs";
 
 export const Login = () => {
@@ -27,10 +25,6 @@ export const Login = () => {
         return;
       }
       // console.log(userCredential.user);
-
-      // set active status when user logs in
-      const userRef = doc(db, "users", userCredential.user.uid);
-      await updateDoc(userRef, { isActive: true });
 
       // navigate to home page
       navigate("/");

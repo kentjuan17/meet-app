@@ -29,7 +29,10 @@
         font-weight: 500;
       }
       p {
-        font-size: 14px;
+        font-size: 0.7rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         color: #c77dff;
       }
     }

@@ -20,6 +20,8 @@ const Messages = () => {
 
   const sortedMessages = groupMessagesByDate(messages);
 
+  console.log("sorted messages: ", sortedMessages);
+
   return (
     <div className="messages">
       {Object.entries(sortedMessages).map(([date, messages]) => (

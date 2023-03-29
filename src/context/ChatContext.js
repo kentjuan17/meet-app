@@ -1,25 +1,26 @@
-import { createContext, useContext, useReducer } from "react";
-import { CurrentUserContext } from "./CurrentUserContext";
+import { createContext, useReducer } from "react";
 
 export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
-  const { currentUser } = useContext(CurrentUserContext);
-
   const INITIAL_STATE = {
     chatId: "null",
+    chatData: {},
     user: {},
+    type: "null",
   };
 
   const chatReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE_USER":
+        const data = action.payload;
         return {
-          user: action.payload,
-          chatId:
-            currentUser.uid > action.payload.uid
-              ? currentUser.uid + action.payload.uid
-              : action.payload.uid + currentUser.uid,
+          chatId: data.id,
+          displayName: data.otherUser.displayName,
+          isActive: data.otherUser.isActive,
+          chatData: data,
+          lastMessage: data.lastMessage,
+          type: data.type,
         };
       case "LOG_OUT":
         return INITIAL_STATE;

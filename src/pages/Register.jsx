@@ -71,6 +71,8 @@ export const Register = () => {
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               userName,
+              displayName: userName,
+              phoneNumber: "",
               email,
               photoURL: url,
               isActive: false,

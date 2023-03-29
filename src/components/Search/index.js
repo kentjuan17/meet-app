@@ -26,7 +26,6 @@ const Search = () => {
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
         setUser(doc.data());
       });
     } catch (err) {
@@ -40,47 +39,21 @@ const Search = () => {
 
   // Adding a contact by clicking the searched user
   const handleStartChat = async () => {
-    // creating an id for the conversation thread
+    // creating an id for the private conversation
     const threadId =
       currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+        ? currentUser.uid + "_" + user.uid
+        : user.uid + "_" + currentUser.uid;
 
     try {
       const response = await getDoc(doc(db, "chats", threadId));
 
       if (!response.exists()) {
         // creates an array of chat messages
-        await setDoc(doc(db, "chats", threadId), { messages: [] });
-
-        // create conversation thread for both the current user and the searched user
-        await setDoc(doc(db, "threads", currentUser.uid), {
-          [threadId]: {
-            lastMessageInfo: {
-              lastMessage: {},
-              lastMessageDate: serverTimestamp(),
-            },
-            userInfo: {
-              uid: user.uid,
-              userName: user.userName,
-              photoURL: user.photoURL,
-            },
-            dateCreated: serverTimestamp(),
-          },
-        });
-        await setDoc(doc(db, "threads", user.uid), {
-          [threadId]: {
-            lastMessageInfo: {
-              lastMessage: {},
-              lastMessageDate: serverTimestamp(),
-            },
-            userInfo: {
-              uid: currentUser.uid,
-              userName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-            },
-            dateCreated: serverTimestamp(),
-          },
+        await setDoc(doc(db, "private-chats", threadId), {
+          members: [currentUser.uid, user.uid],
+          createdAt: serverTimestamp(),
+          lastMessage: {},
         });
       }
     } catch (err) {

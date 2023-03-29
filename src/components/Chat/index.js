@@ -11,11 +11,19 @@ import "./styles.scss";
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
+  console.log("chat comp", data);
 
   return (
     <div className="chat">
       <div className="chat-info">
-        <span>{data.user?.userName}</span>
+        <div className="chat-name-status">
+          <span className="display-name">{data?.displayName}</span>
+          {data?.chatId !== "null" && (
+            <span className="status">
+              {data?.isActive ? "Online" : "Offline"}
+            </span>
+          )}
+        </div>
         <div className="chat-icons">
           <span className="icons">
             <BsCameraVideoFill />

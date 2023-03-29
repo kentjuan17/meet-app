@@ -14,11 +14,10 @@ const Message = ({ message }) => {
   }, [message]);
 
   // gets Firebase Firestore Timestamp in milliseconds and returns message sent time
-  const sentAt = getSentAt(message.date.toMillis());
+  const sentAt = getSentAt(message.sentAt?.toMillis());
 
   return (
     <div ref={ref} className={`message`}>
-      {/* <div className="message-date">test</div> */}
       <div
         className={`message-bar ${
           message.senderId === currentUser.uid && "current-user"

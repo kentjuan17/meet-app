@@ -5,7 +5,7 @@ function groupMessagesByDate(messages) {
   const groups = {};
 
   messages.forEach((message) => {
-    const timestamp = message.date.toMillis();
+    const timestamp = message.sentAt.toMillis();
     const date = new Date(timestamp);
     const dateStr = formatDate(date);
 
