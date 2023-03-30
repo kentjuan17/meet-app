@@ -11,7 +11,6 @@ import "./styles.scss";
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
-  console.log("chat comp", data);
 
   return (
     <div className="chat">

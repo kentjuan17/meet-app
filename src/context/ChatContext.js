@@ -5,10 +5,11 @@ export const ChatContext = createContext();
 export const ChatContextProvider = ({ children }) => {
   const INITIAL_STATE = {
     chatId: "null",
-    chatData: {},
-    user: {},
+    displayName: "",
+    isActive: false,
+    photoURL: false,
+    lastMessage: {},
     type: "null",
-    photoURL: "null",
   };
 
   const chatReducer = (state, action) => {
@@ -20,7 +21,6 @@ export const ChatContextProvider = ({ children }) => {
           displayName: data.otherUser.displayName,
           isActive: data.otherUser.isActive,
           photoURL: data.otherUser.photoURL,
-          chatData: data,
           lastMessage: data.lastMessage,
           type: data.type,
         };

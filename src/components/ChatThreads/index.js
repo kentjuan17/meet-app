@@ -5,7 +5,6 @@ import {
   collection,
   where,
   getDocs,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -23,8 +22,7 @@ const ChatThreads = () => {
     const getChatThreads = () => {
       const q = query(
         collection(db, "private-chats"),
-        where("members", "array-contains", currentUser.uid),
-        orderBy("lastMessage.sentAt", "desc")
+        where("members", "array-contains", currentUser.uid)
       );
 
       const unsubPrivate = onSnapshot(q, (snap) => {
@@ -104,12 +102,13 @@ const ChatThreads = () => {
     dispatch({ type: "CHANGE_USER", payload: chatData });
   };
 
-  console.log("Threads: => ", newThreads);
+  // console.log("Threads: => ", threads);
+  // console.log("New Threads: => ", newThreads);
 
   return (
     // Display user
     <div className="chats">
-      {newThreads?.map((chat, i) => (
+      {newThreads?.map((chat) => (
         <div
           className="user-chat"
           key={chat.id}

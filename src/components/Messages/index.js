@@ -16,11 +16,9 @@ const Messages = () => {
     });
 
     return () => unsubscribe();
-  }, [data.chatId]);
+  }, [data]);
 
   const sortedMessages = groupMessagesByDate(messages);
-
-  console.log("sorted messages: ", sortedMessages);
 
   return (
     <div className="messages">
