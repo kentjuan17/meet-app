@@ -55,6 +55,9 @@ const Search = () => {
           createdAt: serverTimestamp(),
           lastMessage: {},
         });
+        await setDoc(doc(db, "chats", threadId), {
+          messages: [],
+        });
       }
     } catch (err) {
       setError(true);

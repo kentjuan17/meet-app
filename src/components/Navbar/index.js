@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ChatContext } from "../../context/ChatContext";
 import "./styles.scss";
-import { BsFillChatLeftTextFill, BsBoxArrowRight } from "react-icons/bs";
+import { BsPeopleFill, BsBoxArrowRight } from "react-icons/bs";
 
 const Navbar = () => {
   const { currentUser, currentUserData, logout } =
@@ -26,9 +26,9 @@ const Navbar = () => {
       </div>
       <div className="actions">
         <button className="icon-chat">
-          <BsFillChatLeftTextFill />
+          <BsPeopleFill />
         </button>
-        <button className="icon-chat" onClick={handleSignOut}>
+        <button className="icon-chat tooltip" onClick={handleSignOut}>
           <BsBoxArrowRight />
         </button>
       </div>

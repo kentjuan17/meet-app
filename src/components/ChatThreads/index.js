@@ -4,8 +4,8 @@ import {
   query,
   collection,
   where,
-  orderBy,
   getDocs,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -15,15 +15,16 @@ import "./styles.scss";
 const ChatThreads = () => {
   const [threads, setThreads] = useState([]);
   const [newThreads, setNewThreads] = useState([]);
-  const [newUserData, setNewuserData] = useState([]);
   const { currentUser } = useContext(CurrentUserContext);
   const { dispatch } = useContext(ChatContext);
 
+  // retrieves all conversations made by the user
   useEffect(() => {
     const getChatThreads = () => {
       const q = query(
         collection(db, "private-chats"),
-        where("members", "array-contains", currentUser.uid)
+        where("members", "array-contains", currentUser.uid),
+        orderBy("lastMessage.sentAt", "desc")
       );
 
       const unsubPrivate = onSnapshot(q, (snap) => {
@@ -45,7 +46,6 @@ const ChatThreads = () => {
             lastMessage: data.lastMessage,
           };
         });
-        // console.log(threadsData);
         setThreads((prevThreads) => [
           ...prevThreads.filter((t) => t.type !== "private"),
           ...threadsData,
@@ -55,8 +55,9 @@ const ChatThreads = () => {
       return () => unsubPrivate();
     };
     currentUser.uid && getChatThreads();
-  }, [currentUser.uid]);
+  }, [currentUser]);
 
+  // fetching user info from users collection to "threads" array.
   useEffect(() => {
     const fetchUsers = async () => {
       const userIds = threads.map((thread) => {
@@ -67,7 +68,6 @@ const ChatThreads = () => {
         }
       });
 
-      //   console.log("fetch:", userIds);
       const q = query(collection(db, "users"), where("uid", "in", userIds));
       const usersSnapshot = await getDocs(q);
       let usersData = [];
@@ -79,8 +79,6 @@ const ChatThreads = () => {
           isActive: data.isActive,
         });
       });
-      setNewuserData(usersData);
-      //   console.log("user data", usersData);
       const prevThreads = threads;
       const newT = prevThreads.map((thread, i) => {
         const otherUser = thread.otherUser;
@@ -94,7 +92,6 @@ const ChatThreads = () => {
           },
         };
       });
-      console.log("prevT", newT);
       setNewThreads(newT);
     };
 
@@ -106,6 +103,8 @@ const ChatThreads = () => {
   const handleSelect = (chatData) => {
     dispatch({ type: "CHANGE_USER", payload: chatData });
   };
+
+  console.log("Threads: => ", newThreads);
 
   return (
     // Display user

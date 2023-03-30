@@ -4,7 +4,6 @@ import Attach from "../img/attach.png";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import { ChatContext } from "../context/ChatContext";
 import {
-  addDoc,
   arrayUnion,
   doc,
   serverTimestamp,
