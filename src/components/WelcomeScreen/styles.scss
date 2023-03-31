@@ -1,0 +1,33 @@
+@import "./../../sass/variables.scss";
+
+.chat-window {
+  flex: 2;
+  background: $background-image;
+  background-size: cover;
+
+  .welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+
+    .welcome-screen {
+      text-align: center;
+      color: $text-secondary-color;
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin: 10px 0;
+      }
+
+      p {
+        font-weight: 600;
+        margin: 10px 0;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

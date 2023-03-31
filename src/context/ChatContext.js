@@ -10,6 +10,7 @@ export const ChatContextProvider = ({ children }) => {
     photoURL: false,
     lastMessage: {},
     type: "null",
+    isNull: true,
   };
 
   const chatReducer = (state, action) => {
@@ -23,6 +24,7 @@ export const ChatContextProvider = ({ children }) => {
           photoURL: data.otherUser.photoURL,
           lastMessage: data.lastMessage,
           type: data.type,
+          isNull: false,
         };
       case "LOG_OUT":
         return INITIAL_STATE;
