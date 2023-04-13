@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import "./EditProfile.scss";
 import { updateProfile } from "firebase/auth";
-import { doc, updateDoc, setDoc, } from "firebase/firestore";
+import { doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 import { auth, db, storage } from "../../firebase";
-import { BsPlusCircleFill } from "react-icons/bs";
+import { BsPlusCircleFill, BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const EditProfile = () => {
     const { currentUser, currentUserData, updateUserData } = useContext(CurrentUserContext);
@@ -13,6 +14,9 @@ const EditProfile = () => {
     const [newProfilePicture, setNewProfilePicture] = useState(null);
     const [error, setError] = useState("");
     const [previewProfilePicture, setPreviewProfilePicture] = useState(currentUser.photoURL);
+    const [about, setAbout] = useState("");
+    const [saveMessage, setSaveMessage] = useState("");
+    const [currentAbout, setCurrentAbout] = useState("");
 
     const handleProfilePictureChange = (event) => {
         setNewProfilePicture(event.target.files[0]);
@@ -28,8 +32,13 @@ const EditProfile = () => {
         setNewUsername(event.target.value);
     };
 
+    const handleAboutChange = (event) => {
+        setAbout(event.target.value);
+    };
+
     const handleSaveChanges = async (e) => {
         e.preventDefault();
+        setSaveMessage("");
         try {
             const user = auth.currentUser;
             if (!user) {
@@ -89,15 +98,36 @@ const EditProfile = () => {
                     setError("");
                 }
             }
+            await setDoc(doc(db, "status", user.uid), {
+                displayName: userName,
+                about: about,
+            });
+            setSaveMessage("Saving successful!");
         } catch (error) {
             setError(`Update error: ${error.message}`);
         }
     };
 
-
+    useEffect(() => {
+        const fetchAboutText = async () => {
+          if (currentUser) {
+            const docRef = doc(db, "status", currentUser.uid);
+            const docSnap = await getDoc(docRef);
+      
+            if (docSnap.exists()) {
+              setCurrentAbout(docSnap.data().about);
+            }
+          }
+        };
+      
+        fetchAboutText();
+      }, [currentUser]);
 
     return (
         <div className="edit-profile">
+            <Link to="/">
+                <BsFillArrowLeftCircleFill className="back-icon" />
+            </Link>
             <form onSubmit={handleSaveChanges}>
                 <span className="title">Edit Profile</span>
                 <input
@@ -108,7 +138,7 @@ const EditProfile = () => {
                 />
                 <label className="avatar" htmlFor="avatar">
                     <img src={previewProfilePicture} alt="" />
-                    <button><BsPlusCircleFill /></button>
+                    <span><BsPlusCircleFill /></span>
                 </label>
                 <label className="text-input" htmlFor="username">Username</label>
                 <input
@@ -121,9 +151,12 @@ const EditProfile = () => {
                 <input
                     type="text"
                     placeholder="Enter status"
+                    value={about || currentAbout}
+                    onChange={handleAboutChange}
                 />
                 {/* Add input field for changing the picture */}
                 <button>Save Changes</button>
+                <span className="save-message">{saveMessage}</span>
             </form>
         </div>
     );

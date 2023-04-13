@@ -3,6 +3,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ChatContext } from "../../context/ChatContext";
 import { Link } from "react-router-dom";
 import { auth, db, storage } from "../../firebase";
+import { getDoc, doc } from "firebase/firestore";
 import "./styles.scss";
 import { BsPeopleFill, BsBoxArrowRight, BsFillGearFill, } from "react-icons/bs";
 
@@ -12,6 +13,16 @@ const Navbar = () => {
   const { dispatch } = useContext(ChatContext);
 
   const [photoURL, setPhotoURL] = useState(currentUser.photoURL);
+  const [userStatus, setUserStatus] = useState("");
+
+  const fetchUserStatus = async () => {
+    if (currentUser) {
+      const statusDoc = await getDoc(doc(db, "status", currentUser.uid));
+      if (statusDoc.exists()) {
+        setUserStatus(statusDoc.data().about);
+      }
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -24,6 +35,10 @@ const Navbar = () => {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    fetchUserStatus();
+  }, [currentUser]);
 
   const handleSignOut = async () => {
     logout();
@@ -39,7 +54,10 @@ const Navbar = () => {
         ></div>
         <img src={photoURL} alt="" />
       </div>
-      <span style={{marginLeft: 10, width: '100%'}}>{currentUser.displayName}</span>
+      <div className="user-details">
+        <span className="display-name">{currentUser.displayName}</span>
+        <span className="user-status-text">{userStatus}</span>
+      </div>
       <div className="actions">
         <button className="icon-chat">
           <BsPeopleFill />

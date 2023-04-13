@@ -4,6 +4,16 @@
     align-items: center;
     min-height: 100vh;
 
+    .back-icon {
+        position: fixed;
+        color: #461e5c;
+        top: 15px;
+        left: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 100;
+    }
+
     form {
         display: grid;
         grid-template-columns: 1fr;
@@ -62,7 +72,7 @@
             font-size: 13px;
             cursor: pointer;
 
-            button {
+            span {
                 justify-content: center;
                 align-items: center;
                 text-align: center;
@@ -85,6 +95,14 @@
                 object-fit: cover;
                 border-radius: 50%;
             }
+        }
+
+        .save-message {
+            display: flex;
+            font-size: 16px;
+            color: #41a700;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

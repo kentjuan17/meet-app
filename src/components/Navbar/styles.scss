@@ -7,6 +7,7 @@
   background-color: $background-dark-color;
   height: 50px;
   padding: 10px;
+  height: 80px;
   justify-content: space-between;
   color: #fffffc;
 
@@ -27,7 +28,7 @@
       width: 40px;
       border-radius: 50%;
       object-fit: cover;
-    }
+    }   
 
     .user-status {
       border-radius: 50%;
@@ -54,6 +55,19 @@
       color: #80ed99;
     }
   }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 100%;
+
+    .user-status-text {
+      font-size: 12px;
+      margin-left: 2px;
+      color:#979A9A;
+    }
+  } 
 
   .actions {
     display: flex;
