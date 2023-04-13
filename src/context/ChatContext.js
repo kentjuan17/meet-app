@@ -1,4 +1,3 @@
-// ChatContext
 import { createContext, useReducer, useEffect } from "react";
 import { onSnapshot, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
