@@ -8,6 +8,7 @@ import CreateGroup from "./pages/CreateGroup";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "./context/CurrentUserContext";
+import EditProfile from "./components/EditProfile/EditProfile";
 
 function App() {
   const { currentUser } = useContext(CurrentUserContext);
@@ -52,6 +53,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="mobile" element={<PhoneReg />} />
           <Route path="mobileLogin" element={<LoginPhone />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

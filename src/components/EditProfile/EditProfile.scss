@@ -1,0 +1,62 @@
+.edit-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+        width: 400px;
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+        .title {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        button {
+            background-color: #9d4edd;
+            color: #fffffc;
+            padding: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 15px 0;
+            width: 300px;
+            border: none;
+            border-bottom: 1px solid #495057;
+            outline: none;
+
+            &::placeholder {
+                color: #6c757d;
+                font-size: 13px;
+            }
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #6c757d;
+            font-size: 13px;
+            cursor: pointer;
+
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+    }
+}

@@ -47,6 +47,13 @@ export const CurrentUserContextProvider = ({ children }) => {
     };
   }, []);
 
+  const updateUserData = (newData) => {
+    setCurrentUserData((prevData) => ({
+      ...prevData,
+      ...newData,
+    }));
+  };
+
   // Private Message
   // useEffect(() => {
   //   const getThreads = async () => {
@@ -112,6 +119,7 @@ export const CurrentUserContextProvider = ({ children }) => {
     currentUser,
     currentUserData,
     logout,
+    updateUserData,
   };
 
   return (
