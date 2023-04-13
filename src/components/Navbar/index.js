@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const [photoURL, setPhotoURL] = useState(currentUser.photoURL);
   const [userStatus, setUserStatus] = useState("");
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const fetchUserStatus = async () => {
     if (currentUser) {
@@ -22,6 +23,10 @@ const Navbar = () => {
         setUserStatus(statusDoc.data().about);
       }
     }
+  };
+
+  const toggleLogoutModal = () => {
+    setShowLogoutModal(!showLogoutModal);
   };
 
   useEffect(() => {
@@ -41,12 +46,26 @@ const Navbar = () => {
   }, [currentUser]);
 
   const handleSignOut = async () => {
+    toggleLogoutModal();
     logout();
     dispatch({ type: "LOG_OUT" });
   };
 
+  const LogoutModal = () => (
+    <div className="logout-modal">
+      <div className="modal-content">
+        <h4>Are you sure you want to logout?</h4>
+        <div className="buttons">
+          <button style={{ backgroundColor: '#9d4edd', border: 'none', color: 'white', marginBottom: 5 }} onClick={handleSignOut}>Yes</button>
+          <button style={{ backgroundColor: '#f15c4f', border: 'none', color: 'white' }} onClick={toggleLogoutModal}>No</button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="navbar">
+      {showLogoutModal && <LogoutModal />}
       <div className="user">
         <div
           className={`user-status ${currentUserData?.isActive ? "online" : "offline"
@@ -67,7 +86,7 @@ const Navbar = () => {
             <BsFillGearFill />
           </button>
         </Link>
-        <button className="icon-chat tooltip" onClick={handleSignOut}>
+        <button className="icon-chat tooltip" onClick={toggleLogoutModal}>
           <BsBoxArrowRight />
         </button>
       </div>

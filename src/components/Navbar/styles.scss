@@ -1,5 +1,44 @@
 @import "./../../sass/variables.scss";
 
+.logout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    color: #272727;
+    border-radius: 5px;
+    text-align: center;
+
+    h4 {
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: grid;
+      margin-bottom: 5px;
+
+      button {
+        padding: 10px 20px;
+        cursor: pointer;
+        &:hover {
+          background-color: white;
+          color: #fffffc;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
 .navbar {
   display: flex;
   position: relative;
