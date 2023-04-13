@@ -49,7 +49,7 @@ const EditProfile = () => {
             const userName = newUsername;
             const userPicture = newProfilePicture;
 
-            if (userName !== currentUser.displayName || userPicture) {
+            if (userName !== currentUser.displayName || userPicture || about !== currentAbout) {
                 // Upload new profile picture
                 if (userPicture) {
                     const fileName = userName + "-" + Date.now();
@@ -76,9 +76,12 @@ const EditProfile = () => {
                                 photoURL: url,
                             });
 
+                            // Update displayName, photoURL, and status inside the user collection
+                            console.log("Saving status:", about);
                             await setDoc(doc(db, "users", user.uid), {
                                 displayName: userName,
                                 photoURL: url,
+                                status: about,
                             }, { merge: true });
 
                             updateUserData({ displayName: userName, photoURL: url });
@@ -86,22 +89,20 @@ const EditProfile = () => {
                             setError("");
                         });
                 } else {
-                    // Update only the displayName
+                    // Update only the displayName and status
                     await updateProfile(user, {
                         displayName: userName,
                     });
 
+                    // Update displayName and status inside the user collection
                     await setDoc(doc(db, "users", user.uid), {
                         displayName: userName,
+                        status: about,
                     }, { merge: true });
 
                     setError("");
                 }
             }
-            await setDoc(doc(db, "status", user.uid), {
-                displayName: userName,
-                about: about,
-            });
             setSaveMessage("Saving successful!");
         } catch (error) {
             setError(`Update error: ${error.message}`);
@@ -110,18 +111,19 @@ const EditProfile = () => {
 
     useEffect(() => {
         const fetchAboutText = async () => {
-          if (currentUser) {
-            const docRef = doc(db, "status", currentUser.uid);
-            const docSnap = await getDoc(docRef);
-      
-            if (docSnap.exists()) {
-              setCurrentAbout(docSnap.data().about);
+            if (currentUser) {
+                const docRef = doc(db, "users", currentUser.uid); // Change "status" to "users" here
+                const docSnap = await getDoc(docRef);
+        
+                if (docSnap.exists()) {
+                    setCurrentAbout(docSnap.data().status); // Change "about" to "status" here
+                    setAbout(docSnap.data().status); // Add this line to set the "about" state variable
+                }
             }
-          }
         };
-      
+
         fetchAboutText();
-      }, [currentUser]);
+    }, [currentUser]);
 
     return (
         <div className="edit-profile">

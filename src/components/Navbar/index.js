@@ -18,9 +18,9 @@ const Navbar = () => {
 
   const fetchUserStatus = async () => {
     if (currentUser) {
-      const statusDoc = await getDoc(doc(db, "status", currentUser.uid));
-      if (statusDoc.exists()) {
-        setUserStatus(statusDoc.data().about);
+      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+      if (userDoc.exists()) {
+        setUserStatus(userDoc.data().status);
       }
     }
   };
