@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
+import { sendEmailVerification } from "firebase/auth";
 import "./../sass/style.scss";
 import { useNavigate, Link } from "react-router-dom";
 import { BsFillTelephoneFill } from "react-icons/bs";
@@ -59,7 +60,7 @@ export const Register = () => {
           console.log("Upload is " + progress + "% done");
         },
         (error) => {
-          setError(true);
+          setError(`Upload error: ${error.message}`);
           console.log(error);
         },
         () => {
@@ -68,6 +69,7 @@ export const Register = () => {
               displayName: userName,
               photoURL: url,
             });
+            await sendEmailVerification(res.user);
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               userName,
@@ -83,7 +85,7 @@ export const Register = () => {
         }
       );
     } catch (error) {
-      setError(true);
+      setError(`Registration error: ${error.message}`);
     }
   };
 
@@ -140,7 +142,7 @@ export const Register = () => {
                 <span>Upload display picture</span>
               </label>
               <button>Sign Up</button>
-              {error && <span>Something went wrong</span>}
+              {error && <span>{error}</span>}
               <h4 style={{ marginTop: 1 }}>or</h4>
               <Link to="/mobile" style={{ textDecoration: "none" }}>
                 <button className="btn-mobile">

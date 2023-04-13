@@ -20,7 +20,7 @@ export const Login = () => {
         email,
         password
       );
-      if (!userCredential.user) {
+      if (!userCredential.user.emailVerified) {
         setError("Please verify your email before signing in.");
         return;
       }
