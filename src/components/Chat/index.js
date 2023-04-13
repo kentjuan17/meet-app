@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Input from "../Input";
 import Messages from "./../Messages";
 import { ChatContext } from "../../context/ChatContext";
-import { db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { getDoc, doc } from "firebase/firestore";
 import {
   BsThreeDots,
@@ -31,10 +31,12 @@ const Chat = () => {
     setShowUserModal(!showUserModal);
   };
 
-  const fetchUserStatus = async () => {
-    console.log("Fetching user status, data:", data);
-    if (data?.uid) {
-      const userDoc = await getDoc(doc(db, "users", data.uid));
+  const fetchUserStatus = async (chatId) => {
+    if (chatId) {
+      const uids = chatId.split('_'); // Extract the uids from the chatId
+      const otherUid = uids[0] === auth.currentUser.uid ? uids[1] : uids[0]; // Get the other user's uid
+  
+      const userDoc = await getDoc(doc(db, "users", otherUid));
       if (userDoc.exists()) {
         console.log("Fetched status:", userDoc.data().status);
         setUserStatus(userDoc.data().status || "");
@@ -43,10 +45,10 @@ const Chat = () => {
       }
     }
   };
-  
+
   useEffect(() => {
-    fetchUserStatus();
-  }, [data]);
+    fetchUserStatus(data.chatId);
+  }, [data.chatId]);
 
   return (
     <div className="chat">
