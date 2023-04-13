@@ -4,7 +4,7 @@ import { ChatContext } from "../../context/ChatContext";
 import { Link } from "react-router-dom";
 import { auth, db, storage } from "../../firebase";
 import "./styles.scss";
-import { BsPeopleFill, BsBoxArrowRight, BsFillGearFill } from "react-icons/bs";
+import { BsPeopleFill, BsBoxArrowRight, BsFillGearFill, } from "react-icons/bs";
 
 const Navbar = () => {
   const { currentUser, currentUserData, logout } =

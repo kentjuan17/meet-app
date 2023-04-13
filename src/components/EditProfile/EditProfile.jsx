@@ -5,6 +5,7 @@ import { updateProfile } from "firebase/auth";
 import { doc, updateDoc, setDoc, } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 import { auth, db, storage } from "../../firebase";
+import { BsPlusCircleFill } from "react-icons/bs";
 
 const EditProfile = () => {
     const { currentUser, currentUserData, updateUserData } = useContext(CurrentUserContext);
@@ -45,7 +46,7 @@ const EditProfile = () => {
                     const fileName = userName + "-" + Date.now();
                     const storageRef = ref(storage, fileName);
 
-                    const uploadTask = await uploadBytesResumable(storageRef, userPicture);
+                    const uploadTask = uploadBytesResumable(storageRef, userPicture);
 
                     uploadTask.on(
                         "state_changed",
@@ -58,24 +59,22 @@ const EditProfile = () => {
                             setError(`Upload error: ${error.message}`);
                             console.log(error);
                         },
-                        () => {
-                            getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+                        async () => {
+                            const url = await getDownloadURL(uploadTask.snapshot.ref);
 
-                                await updateProfile(user, {
-                                    displayName: userName,
-                                    photoURL: url,
-                                });
+                            await updateProfile(user, {
+                                displayName: userName,
+                                photoURL: url,
+                            });
 
-                                await setDoc(doc(db, "users", user.uid), {
-                                    displayName: userName,
-                                    photoURL: url,
-                                }, { merge: true });
+                            await setDoc(doc(db, "users", user.uid), {
+                                displayName: userName,
+                                photoURL: url,
+                            }, { merge: true });
 
-                                updateUserData({ displayName: userName, photoURL: url });
+                            updateUserData({ displayName: userName, photoURL: url });
 
-                                setError("");
-                            }
-                            )
+                            setError("");
                         });
                 } else {
                     // Update only the displayName
@@ -96,27 +95,33 @@ const EditProfile = () => {
     };
 
 
+
     return (
         <div className="edit-profile">
             <form onSubmit={handleSaveChanges}>
                 <span className="title">Edit Profile</span>
-                <label htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    placeholder="Enter your full name"
-                    value={newUsername}
-                    onChange={handleUsernameChange}
-                />
                 <input
                     type="file"
                     style={{ display: "none" }}
                     id="avatar"
                     onChange={handleProfilePictureChange}
                 />
-                <label htmlFor="avatar">
+                <label className="avatar" htmlFor="avatar">
                     <img src={previewProfilePicture} alt="" />
-                    <span>Upload display picture</span>
+                    <button><BsPlusCircleFill /></button>
                 </label>
+                <label className="text-input" htmlFor="username">Username</label>
+                <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={newUsername}
+                    onChange={handleUsernameChange}
+                />
+                <label className="text-input" htmlFor="username">About</label>
+                <input
+                    type="text"
+                    placeholder="Enter status"
+                />
                 {/* Add input field for changing the picture */}
                 <button>Save Changes</button>
             </form>

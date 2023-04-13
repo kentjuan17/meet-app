@@ -43,13 +43,41 @@
             }
         }
 
-        label {
+        .text-input {
             display: flex;
             align-items: center;
             gap: 10px;
             color: #6c757d;
             font-size: 13px;
             cursor: pointer;
+            margin-bottom: -10px;
+        }
+
+        .avatar {
+            display: block;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            color: #6c757d;
+            font-size: 13px;
+            cursor: pointer;
+
+            button {
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                border-style: none;
+                margin-left: -30px;
+                background: none;
+                font-size: 24px;
+                padding: 5px 10px;
+                color: #9d4edd;
+                cursor: pointer;
+
+                svg {
+                    justify-content: center;
+                }
+            }
 
             img {
                 width: 100px;
