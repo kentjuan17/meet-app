@@ -8,7 +8,7 @@ import { ChatContext } from "../context/ChatContext";
 export const Home = () => {
   const { data } = useContext(ChatContext);
 
-  console.log("Home Comp:", data);
+  // console.log("Home Comp:", data);
   return (
     <div className="home-container">
       <div className="container">

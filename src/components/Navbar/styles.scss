@@ -67,7 +67,7 @@
       width: 40px;
       border-radius: 50%;
       object-fit: cover;
-    }   
+    }
 
     .user-status {
       border-radius: 50%;
@@ -82,8 +82,12 @@
       background-color: $success-color;
     }
 
-    .offline {
+    .busy {
       background-color: $danger-color;
+    }
+
+    .offline {
+      background-color: $offline-color;
     }
 
     .online-indicator {
@@ -104,9 +108,9 @@
     .user-status-text {
       font-size: 12px;
       margin-left: 2px;
-      color:#979A9A;
+      color: #979a9a;
     }
-  } 
+  }
 
   .actions {
     display: flex;

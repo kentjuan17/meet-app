@@ -273,8 +273,12 @@ hr {
         background-color: $success-color;
       }
 
-      .offline {
+      .busy {
         background-color: $danger-color;
+      }
+
+      .offline {
+        background-color: $offline-color;
       }
     }
   }

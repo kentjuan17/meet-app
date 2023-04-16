@@ -1,17 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import {
-  getDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  onSnapshot,
-  collection,
-  query,
-  where,
-  orderBy,
-} from "firebase/firestore";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 
 export const CurrentUserContext = createContext();
 
@@ -30,8 +20,8 @@ export const CurrentUserContextProvider = ({ children }) => {
       if (user) {
         const docRef = doc(db, "users", user.uid);
         // set active status when user logs in
-        updateDoc(docRef, { isActive: true })
-          .then(() => console.log("isActive changed to true"))
+        updateDoc(docRef, { isActive: true, activeStatus: "online" })
+          .then(() => console.log("active status ok"))
           .catch((err) => console.log(err));
 
         getDoc(docRef)
@@ -42,9 +32,7 @@ export const CurrentUserContextProvider = ({ children }) => {
       }
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   const updateUserData = (newData) => {
@@ -101,7 +89,7 @@ export const CurrentUserContextProvider = ({ children }) => {
     try {
       // Update the user's isActive status to false
       const userRef = doc(db, "users", currentUser.uid);
-      await updateDoc(userRef, { isActive: false });
+      await updateDoc(userRef, { isActive: false, activeStatus: "offline" });
 
       // sign out user and reset all state
       signOut(auth)

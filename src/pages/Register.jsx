@@ -80,6 +80,9 @@ export const Register = () => {
               isActive: false,
             });
             await setDoc(doc(db, "threads", res.user.uid), {});
+            await setDoc(doc(db, "contacts", res.user.uid), {
+              contactList: [],
+            });
             navigate("/login");
           });
         }

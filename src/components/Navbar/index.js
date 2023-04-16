@@ -2,28 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ChatContext } from "../../context/ChatContext";
 import { Link } from "react-router-dom";
-import { auth, db, storage } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { getDoc, doc } from "firebase/firestore";
 import "./styles.scss";
-import { BsPeopleFill, BsBoxArrowRight, BsFillGearFill, } from "react-icons/bs";
+import { BsPeopleFill, BsBoxArrowRight, BsFillGearFill } from "react-icons/bs";
 
 const Navbar = () => {
-  const { currentUser, currentUserData, logout } =
-    useContext(CurrentUserContext);
+  const { currentUser, logout } = useContext(CurrentUserContext);
   const { dispatch } = useContext(ChatContext);
 
   const [photoURL, setPhotoURL] = useState(currentUser.photoURL);
   const [userStatus, setUserStatus] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  const fetchUserStatus = async () => {
-    if (currentUser) {
-      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-      if (userDoc.exists()) {
-        setUserStatus(userDoc.data().status);
-      }
-    }
-  };
+  const [activeStatus, setActiveStatus] = useState("online");
 
   const toggleLogoutModal = () => {
     setShowLogoutModal(!showLogoutModal);
@@ -42,7 +33,15 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    fetchUserStatus();
+    (async () => {
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+          setUserStatus(userDoc.data().status);
+          setActiveStatus(userDoc.data().activeStatus);
+        }
+      }
+    })();
   }, [currentUser]);
 
   const handleSignOut = async () => {
@@ -56,8 +55,27 @@ const Navbar = () => {
       <div className="modal-content">
         <h4>Are you sure you want to logout?</h4>
         <div className="buttons">
-          <button style={{ backgroundColor: '#9d4edd', border: 'none', color: 'white', marginBottom: 5 }} onClick={handleSignOut}>Yes</button>
-          <button style={{ backgroundColor: '#f15c4f', border: 'none', color: 'white' }} onClick={toggleLogoutModal}>No</button>
+          <button
+            style={{
+              backgroundColor: "#9d4edd",
+              border: "none",
+              color: "white",
+              marginBottom: 5,
+            }}
+            onClick={handleSignOut}
+          >
+            Yes
+          </button>
+          <button
+            style={{
+              backgroundColor: "#f15c4f",
+              border: "none",
+              color: "white",
+            }}
+            onClick={toggleLogoutModal}
+          >
+            No
+          </button>
         </div>
       </div>
     </div>
@@ -67,10 +85,7 @@ const Navbar = () => {
     <div className="navbar">
       {showLogoutModal && <LogoutModal />}
       <div className="user">
-        <div
-          className={`user-status ${currentUserData?.isActive ? "online" : "offline"
-            }`}
-        ></div>
+        <div className={`user-status ${activeStatus}`}></div>
         <img src={photoURL} alt="" />
       </div>
       <div className="user-details">

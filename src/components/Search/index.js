@@ -9,7 +9,10 @@ import {
   setDoc,
   doc,
   getDoc,
+  updateDoc,
   serverTimestamp,
+  Timestamp,
+  arrayUnion,
 } from "firebase/firestore";
 import "./styles.scss";
 
@@ -57,6 +60,18 @@ const Search = () => {
         });
         await setDoc(doc(db, "chats", threadId), {
           messages: [],
+        });
+        await updateDoc(doc(db, "contacts", currentUser.uid), {
+          contactList: arrayUnion({
+            id: user.uid,
+            dateAdded: Timestamp.now(),
+          }),
+        });
+        await updateDoc(doc(db, "contacts", user.uid), {
+          contactList: arrayUnion({
+            id: user.uid,
+            dateAdded: Timestamp.now(),
+          }),
         });
       }
     } catch (err) {

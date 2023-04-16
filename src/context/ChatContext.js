@@ -10,6 +10,7 @@ export const ChatContextProvider = ({ children }) => {
     displayName: "",
     isActive: false,
     photoURL: false,
+    activeStatus: "offline",
     status: "",
     lastMessage: {},
     type: "null",
@@ -25,6 +26,7 @@ export const ChatContextProvider = ({ children }) => {
           chatId: data.id,
           displayName: data.otherUser.displayName,
           isActive: data.otherUser.isActive,
+          activeStatus: data.otherUser.activeStatus,
           photoURL: data.otherUser.photoURL,
           lastMessage: data.lastMessage,
           type: data.type,
@@ -34,6 +36,7 @@ export const ChatContextProvider = ({ children }) => {
         return {
           ...state,
           status: action.status,
+          activeStatus: action.activeStatus,
         };
       case "LOG_OUT":
         return INITIAL_STATE;
@@ -48,7 +51,10 @@ export const ChatContextProvider = ({ children }) => {
     if (chatId && chatId !== "null") {
       const userDoc = await getDoc(doc(db, "users", chatId));
       if (userDoc.exists()) {
-        dispatch({ type: "UPDATE_USER_STATUS", status: userDoc.data().status || "" });
+        dispatch({
+          type: "UPDATE_USER_STATUS",
+          status: userDoc.data().status || "",
+        });
       }
     }
   };
@@ -70,7 +76,7 @@ export const ChatContextProvider = ({ children }) => {
         unsubscribe();
       };
     }
-  }, [state.chatId]);
+  }, [state]);
 
   return (
     <ChatContext.Provider value={{ data: state, dispatch }}>

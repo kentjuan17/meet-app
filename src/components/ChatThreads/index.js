@@ -40,6 +40,7 @@ const ChatThreads = () => {
               displayName: "",
               photoURL: "",
               isActive: false,
+              activeStatus: "",
             },
             lastMessage: data.lastMessage,
           };
@@ -75,6 +76,7 @@ const ChatThreads = () => {
           displayName: data.displayName,
           photoURL: data.photoURL,
           isActive: data.isActive,
+          activeStatus: data.activeStatus,
         });
       });
       const prevThreads = threads;
@@ -87,6 +89,7 @@ const ChatThreads = () => {
             displayName: usersData[i].displayName,
             photoURL: usersData[i].photoURL,
             isActive: usersData[i].isActive,
+            activeStatus: usersData[i].activeStatus,
           },
         };
       });
@@ -116,9 +119,7 @@ const ChatThreads = () => {
         >
           <div className="user">
             <div
-              className={`user-status ${
-                chat.otherUser?.isActive ? "online" : "offline"
-              }`}
+              className={`user-status ${chat.otherUser?.activeStatus}`}
             ></div>
             <img src={chat.otherUser?.photoURL} alt="" />
           </div>

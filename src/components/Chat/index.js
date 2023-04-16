@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Input from "../Input";
 import Messages from "./../Messages";
 import { ChatContext } from "../../context/ChatContext";
-import { auth, db, storage } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { getDoc, doc } from "firebase/firestore";
 import {
   BsThreeDots,
@@ -16,7 +16,9 @@ const UserModal = ({ data, userStatus, toggleUserModal }) => (
     <div className="modal-content">
       <img src={data?.photoURL} alt="" />
       <h4>{data?.displayName}</h4>
-      <p>{userStatus && userStatus !== "" ? userStatus : "No status provided"}</p>
+      <p>
+        {userStatus && userStatus !== "" ? userStatus : "No status provided"}
+      </p>
       <button onClick={toggleUserModal}>Close</button>
     </div>
   </div>
@@ -33,12 +35,12 @@ const Chat = () => {
 
   const fetchUserStatus = async (chatId) => {
     if (chatId) {
-      const uids = chatId.split('_'); // Extract the uids from the chatId
+      const uids = chatId.split("_"); // Extract the uids from the chatId
       const otherUid = uids[0] === auth.currentUser.uid ? uids[1] : uids[0]; // Get the other user's uid
-  
+
       const userDoc = await getDoc(doc(db, "users", otherUid));
       if (userDoc.exists()) {
-        console.log("Fetched status:", userDoc.data().status);
+        // console.log("Fetched status:", userDoc.data().status);
         setUserStatus(userDoc.data().status || "");
       } else {
         setUserStatus("");
@@ -53,7 +55,11 @@ const Chat = () => {
   return (
     <div className="chat">
       {showUserModal && (
-        <UserModal data={data} userStatus={userStatus} toggleUserModal={toggleUserModal} />
+        <UserModal
+          data={data}
+          userStatus={userStatus}
+          toggleUserModal={toggleUserModal}
+        />
       )}
       <div className="chat-info">
         <div className="userInfo">
@@ -66,9 +72,7 @@ const Chat = () => {
           <div className="chat-name-status">
             <span className="display-name">{data?.displayName}</span>
             {data?.chatId !== "null" && (
-              <span className="status">
-                {data?.isActive ? "Online" : "Offline"}
-              </span>
+              <span className="status">{data?.activeStatus}</span>
             )}
           </div>
         </div>
