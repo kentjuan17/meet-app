@@ -93,9 +93,11 @@ const Navbar = () => {
         <span className="user-status-text">{userStatus}</span>
       </div>
       <div className="actions">
-        <button className="icon-chat">
-          <BsPeopleFill />
-        </button>
+        <Link to="/group">
+          <button className="icon-chat">
+            <BsPeopleFill />
+          </button>
+        </Link>
         <Link to="/edit-profile">
           <button className="icon-edit">
             <BsFillGearFill />

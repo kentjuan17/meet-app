@@ -1,11 +1,10 @@
 @import "./../../sass/variables.scss";
 
-.edit-profile {
+.create-group-chat {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: $background-light-color;
 
   .back-icon {
     position: fixed;

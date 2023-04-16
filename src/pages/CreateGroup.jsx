@@ -1,11 +1,10 @@
 import React from "react";
+import CreateGroupChat from "../components/CreateGroupChat";
 
 const CreateGroup = () => {
   return (
     <div className="home-container">
-      <div className="container">
-        <div>Create Group</div>
-      </div>
+      <CreateGroupChat />
     </div>
   );
 };
