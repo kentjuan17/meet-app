@@ -51,7 +51,44 @@ const ChatThreads = () => {
         ]);
       });
 
-      return () => unsubPrivate();
+      const qGroup = query(
+        collection(db, "groups"),
+        where("members", "array-contains", currentUser.uid)
+      );
+
+      const unsubGroup = onSnapshot(qGroup, (snap) => {
+        const groups = [];
+        snap.forEach((doc) => {
+          const data = doc.data();
+          const otherUsersId = data.members.filter(
+            (id) => id !== currentUser.uid
+          );
+
+          if (doc.exists()) {
+            groups.push({
+              id: doc.id,
+              type: "group",
+              createdAt: data.createdAt,
+              createdBy: data.createdBy,
+              lastMessage: data.lastMessage,
+              groupName: data.name,
+              otherMembers: otherUsersId,
+              otherUser: {},
+            });
+          }
+          // console.log("Groups", ...groups);
+          // TODO: pending fetch other members profile
+          setThreads((prevThreads) => [
+            ...prevThreads.filter((t) => t.type !== "group"),
+            ...groups,
+          ]);
+        });
+      });
+
+      return () => {
+        unsubPrivate();
+        unsubGroup();
+      };
     };
     currentUser.uid && getChatThreads();
   }, [currentUser]);
@@ -59,13 +96,15 @@ const ChatThreads = () => {
   // fetching user info from users collection to "threads" array.
   useEffect(() => {
     const fetchUsers = async () => {
-      const userIds = threads.map((thread) => {
+      const userIds = threads.map((thread, i) => {
         if (thread.type === "private") {
           return thread.otherUser.id;
         } else {
-          return thread.lastMessage.senderId;
+          return thread.otherMembers;
         }
       });
+
+      // console.log("user IDs", userIds);
 
       const q = query(collection(db, "users"), where("uid", "in", userIds));
       const usersSnapshot = await getDocs(q);
@@ -79,21 +118,45 @@ const ChatThreads = () => {
           activeStatus: data.activeStatus,
         });
       });
-      const prevThreads = threads;
-      const newT = prevThreads.map((thread, i) => {
-        const otherUser = thread.otherUser;
-        return {
-          ...thread,
-          otherUser: {
-            ...otherUser,
-            displayName: usersData[i].displayName,
-            photoURL: usersData[i].photoURL,
-            isActive: usersData[i].isActive,
-            activeStatus: usersData[i].activeStatus,
-          },
-        };
-      });
-      setNewThreads(newT);
+
+      // Put user data to thread state
+      setThreads((prevThreads) =>
+        prevThreads.map((thread, i) => {
+          if (thread.type === "private") {
+            const otherUser = thread.otherUser;
+            return {
+              ...thread,
+              otherUser: {
+                ...otherUser,
+                displayName: usersData[i].displayName,
+                photoURL: usersData[i].photoURL,
+                isActive: usersData[i].isActive,
+                activeStatus: usersData[i].activeStatus,
+              },
+            };
+          } else {
+            return {
+              ...thread,
+              otherUser: {},
+            };
+          }
+        })
+      );
+      // const prevThreads = threads;
+      // const newT = prevThreads.map((thread, i) => {
+      //   const otherUser = thread.otherUser;
+      //   return {
+      //     ...thread,
+      //     otherUser: {
+      //       ...otherUser,
+      //       displayName: usersData[i].displayName,
+      //       photoURL: usersData[i].photoURL,
+      //       isActive: usersData[i].isActive,
+      //       activeStatus: usersData[i].activeStatus,
+      //     },
+      //   };
+      // });
+      // setNewThreads(newT);
     };
 
     if (threads.length > 0) {
@@ -111,22 +174,34 @@ const ChatThreads = () => {
   return (
     // Display user
     <div className="chats">
-      {newThreads?.map((chat) => (
+      {threads?.map((chat) => (
         <div
           className="user-chat"
           key={chat.id}
           onClick={() => handleSelect(chat)}
         >
-          <div className="user">
-            <div
-              className={`user-status ${chat.otherUser?.activeStatus}`}
-            ></div>
-            <img src={chat.otherUser?.photoURL} alt="" />
-          </div>
-          <div className="user-info">
-            <span>{chat.otherUser?.displayName}</span>
-            <p>{chat.lastMessage?.text}</p>
-          </div>
+          {chat.type === "private" && (
+            <>
+              <div className="user">
+                <div
+                  className={`user-status ${chat.otherUser?.activeStatus}`}
+                ></div>
+                <img src={chat.otherUser?.photoURL} alt="" />
+              </div>
+              <div className="user-info">
+                <span>{chat.otherUser?.displayName}</span>
+                <p>{chat.lastMessage?.text}</p>
+              </div>
+            </>
+          )}
+          {chat.type === "group" && (
+            <>
+              <div className="user-info">
+                <span>{chat.groupName}</span>
+                <p>{chat.lastMessage?.text}</p>
+              </div>
+            </>
+          )}
         </div>
       ))}
     </div>

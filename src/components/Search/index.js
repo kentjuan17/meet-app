@@ -65,12 +65,14 @@ const Search = () => {
           contactList: arrayUnion({
             id: user.uid,
             dateAdded: Timestamp.now(),
+            displayName: user.displayName,
           }),
         });
         await updateDoc(doc(db, "contacts", user.uid), {
           contactList: arrayUnion({
-            id: user.uid,
+            id: currentUser.uid,
             dateAdded: Timestamp.now(),
+            displayName: currentUser.displayName,
           }),
         });
       }

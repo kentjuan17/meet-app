@@ -59,16 +59,20 @@
       }
     }
 
-    select {
-      padding: 15px 0;
-      width: 300px;
-      border: none;
-      border-bottom: 1px solid #495057;
-      outline: none;
+    h3 {
+      margin: 0.5rem 0;
+    }
 
-      &::placeholder {
-        color: #6c757d;
-        font-size: 13px;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        list-style: none;
+        cursor: pointer;
+        margin: 0.5rem 0;
+        padding: 0.2rem 0;
       }
     }
 

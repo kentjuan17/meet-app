@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import * as database from "./../../database";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { Timestamp } from "firebase/firestore";
 
 const CreateGroupChat = () => {
+  const { currentUser } = useContext(CurrentUserContext);
   const [groupName, setGroupName] = useState("");
   const [selectedContacts, setSelectedContacts] = useState([]);
+  const [contacts, setContacts] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const getContacts = await database.getContactList(currentUser.uid);
+
+      if (getContacts !== null) {
+        setContacts(getContacts.contactList);
+      }
+    })();
+  }, [currentUser]);
 
   const handleSelectContact = (contact) => {
     if (selectedContacts.includes(contact)) {
@@ -18,7 +35,30 @@ const CreateGroupChat = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(groupName, selectedContacts);
+    if (groupName && selectedContacts) {
+      // console.log(groupName, selectedContacts);
+      const getUserIds = selectedContacts.map((contact) => contact.id);
+
+      const data = {
+        createdAt: Timestamp.now(),
+        createdBy: currentUser.uid,
+        members: [currentUser.uid, ...getUserIds],
+        lastMessage: {},
+        name: groupName,
+      };
+      console.log(data);
+      const savedId = await database.addGroupDoc(data);
+
+      if (savedId) {
+        data.id = savedId;
+
+        navigate("/");
+
+        // Clear the form
+        setGroupName("");
+        setSelectedContacts([]);
+      }
+    }
   };
 
   return (
@@ -28,20 +68,33 @@ const CreateGroupChat = () => {
       </Link>
       <form onSubmit={handleSubmit}>
         <span className="title">Add Group Participants</span>
-        <label htmlFor="group-name-input">Group Name:</label>
+        <span className="text-input">Select Contacts</span>
+        <ul>
+          {contacts.map((contact) => (
+            <li
+              key={contact.id}
+              onClick={() => handleSelectContact(contact)}
+              style={{
+                fontWeight: selectedContacts.includes(contact)
+                  ? "bold"
+                  : "normal",
+              }}
+            >
+              {contact.displayName}
+            </li>
+          ))}
+        </ul>
+        <label htmlFor="group-name-input" className="text-input">
+          Group Name
+        </label>
         <input
           id="group-name-input"
           type="text"
+          placeholder="Enter Group Name"
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
         />
-        <h3>Select contacts:</h3>
-        <ul>
-          <li onClick={(e) => handleSelectContact(e.target.value)}>Test</li>
-          <li onClick={(e) => handleSelectContact(e.target.value)}>Test1</li>
-          <li onClick={(e) => handleSelectContact(e.target.value)}>Test2</li>
-          <li onClick={(e) => handleSelectContact(e.target.value)}>Test3</li>
-        </ul>
+
         <button type="submit">Create Group Chat</button>
       </form>
     </div>

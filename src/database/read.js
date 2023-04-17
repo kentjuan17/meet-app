@@ -13,3 +13,23 @@ export async function getUserProfile(id) {
     return null;
   }
 }
+
+export async function getGroupDoc(id) {
+  try {
+    const docSnap = await getDoc(doc(db, "groups", id));
+
+    return docSnap.exists() && docSnap.data();
+  } catch {
+    return null;
+  }
+}
+
+export async function getContactList(id) {
+  try {
+    const docSnap = await getDoc(doc(db, "contacts", id));
+
+    return docSnap.exists() && docSnap.data();
+  } catch {
+    return null;
+  }
+}

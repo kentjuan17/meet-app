@@ -34,12 +34,18 @@ const Navbar = () => {
 
   useEffect(() => {
     (async () => {
-      if (currentUser) {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          setUserStatus(userDoc.data().status);
-          setActiveStatus(userDoc.data().activeStatus);
+      try {
+        if (currentUser) {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            setUserStatus(data.status);
+            setActiveStatus(data.activeStatus);
+          }
         }
+      } catch (error) {
+        console.log("this is the error", error.message, error.code);
       }
     })();
   }, [currentUser]);
