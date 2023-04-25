@@ -101,7 +101,6 @@ const Search = () => {
       {user && (
         <div className="user-chat" onClick={() => handleStartChat()}>
           <div className="user">
-            <div className="user-status"></div>
             <img src={user.photoURL} alt="" />
           </div>
           <div className="user-info">

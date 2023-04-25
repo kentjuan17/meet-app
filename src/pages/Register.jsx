@@ -69,7 +69,7 @@ export const Register = () => {
               displayName: userName,
               photoURL: url,
             });
-            await sendEmailVerification(res.user);
+            // await sendEmailVerification(res.user);
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               userName,
@@ -79,7 +79,6 @@ export const Register = () => {
               photoURL: url,
               isActive: false,
             });
-            await setDoc(doc(db, "threads", res.user.uid), {});
             await setDoc(doc(db, "contacts", res.user.uid), {
               contactList: [],
             });

@@ -1,17 +1,15 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBWldusV8biOrGf4zIG0GnIkiexX8jshOc",
-  authDomain: "meet-app-a7df5.firebaseapp.com",
-  projectId: "meet-app-a7df5",
-  storageBucket: "meet-app-a7df5.appspot.com",
-  messagingSenderId: "877417010213",
-  appId: "1:877417010213:web:2c38a24bcf0e7741909bcc",
-  measurementId: "G-4DQG860KFK",
+  apiKey: "AIzaSyDrdappnXYSuTpvDCESIHQnWPHhYdzjVnY",
+  authDomain: "meetapp-df369.firebaseapp.com",
+  projectId: "meetapp-df369",
+  storageBucket: "meetapp-df369.appspot.com",
+  messagingSenderId: "618157606859",
+  appId: "1:618157606859:web:49e4c8e1caa08da5eb184e",
 };
 
 // Initialize Firebase

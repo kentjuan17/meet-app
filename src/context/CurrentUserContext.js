@@ -82,7 +82,7 @@ export const CurrentUserContextProvider = ({ children }) => {
   // }, [currentUser]);
 
   // console.log("Current User Auth:", currentUser);
-  // console.log("Current User Data:", currentUserData);
+  console.log("Current User Data:", currentUserData);
 
   // Log Out user function
   const logout = async () => {

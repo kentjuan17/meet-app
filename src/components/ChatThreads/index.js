@@ -13,7 +13,7 @@ import "./styles.scss";
 
 const ChatThreads = () => {
   const [threads, setThreads] = useState([]);
-  const [newThreads, setNewThreads] = useState([]);
+  // const [newThreads, setNewThreads] = useState([]);
   const { currentUser } = useContext(CurrentUserContext);
   const { dispatch } = useContext(ChatContext);
 
